@@ -49,9 +49,9 @@ public class ClienteDAO implements IClienteDAO {
 	@Override
 	public Cliente buscar(String codigo) throws Exception {
 		Connection connection = null;
-		PreparedStatement stm = null;
-		ResultSet rs = null;
-		Cliente cliente = null;
+    	PreparedStatement stm = null;
+    	ResultSet rs = null;
+    	Cliente cliente = null;
 		try {
 			connection = ConnectionFactory.getConnection();
 			String sql = getSqlSelect();
@@ -59,19 +59,19 @@ public class ClienteDAO implements IClienteDAO {
 			adicionarParametrosSelect(stm, codigo);
 			rs = stm.executeQuery();
 			
-			if (rs.next()) {
-				cliente = new Cliente();
-				Long id = rs.getLong("id");
-				String nome = rs.getString("nome");
-				String cd = rs.getString("codigo");
-				cliente.setId(id);
-				cliente.setNome(nome);
-				cliente.setCodigo(cd);
-			}
+		    if (rs.next()) {
+		    	cliente = new Cliente();
+		    	Long id = rs.getLong("ID");
+		    	String nome = rs.getString("NOME");
+		    	String cd = rs.getString("CODIGO");
+		    	cliente.setId(id);
+		    	cliente.setNome(nome);
+		    	cliente.setCodigo(cd);
+		    }
 		} catch(Exception e) {
 			throw e;
 		} finally {
-			closeConnection(connection, stm, null);
+			closeConnection(connection, stm, rs);
 		}
 		return cliente;
 	}
@@ -102,7 +102,7 @@ public class ClienteDAO implements IClienteDAO {
 		} catch(Exception e) {
 			throw e;
 		} finally {
-			closeConnection(connection, stm, null);
+			closeConnection(connection, stm, rs);
 		}
 		return list;
 	}
@@ -128,7 +128,7 @@ public class ClienteDAO implements IClienteDAO {
 	private String getSqlInsert() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("insert into tb_cliente (id, codigo, nome) ");
-		sb.append("values (nextval('sq_cliente'),?,?");
+		sb.append("values (nextval('sq_cliente'),?,?) ");
 		return sb.toString();
 	}
 
@@ -156,9 +156,9 @@ public class ClienteDAO implements IClienteDAO {
 
 	private String getSqlUpdate() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("update tb_cliente");
-		sb.append("set nome = ?, set codigo = ?");
-		sb.append("where id = ?");
+		sb.append("update tb_cliente ");
+		sb.append("set nome = ?, codigo = ? ");
+		sb.append("where id = ? ");
 		return sb.toString();
 	}
 
@@ -170,25 +170,25 @@ public class ClienteDAO implements IClienteDAO {
 
 	private String getSqlSelect() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("select * from tb_cliente");
-		sb.append("where codigo = ?");
+		sb.append("select * from tb_cliente ");
+		sb.append("where codigo = ? ");
 		return sb.toString();
 	}
 
 	private void adicionarParametrosSelect(PreparedStatement stm, String codigo) throws SQLException {
-		stm.setString(1, codigo);	
+		stm.setString(1, codigo);
 	}	
 
 	private String getSqlSelectAll() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("select * from tb_cliente");
+		sb.append("select * from tb_cliente ");
 		return sb.toString();
 	}
 	
 	private String getSqlDelete() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("delete from tb_cliente");
-		sb.append("where codigo = ?");
+		sb.append("delete from tb_cliente ");
+		sb.append("where codigo = ? ");
 		return sb.toString();
 	}
 	

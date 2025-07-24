@@ -73,7 +73,7 @@ public class ProdutoDAO implements IProdutoDAO {
 		} catch(Exception e) {
 			throw e;
 		} finally {
-			closeConnection(connection, stm, null);
+			closeConnection(connection, stm, rs);
 		}
 		return produto;
 	}
@@ -106,7 +106,7 @@ public class ProdutoDAO implements IProdutoDAO {
 		} catch(Exception e) {
 			throw e;
 		} finally {
-			closeConnection(connection, stm, null);
+			closeConnection(connection, stm, rs);
 		}
 		return list;
 	}
@@ -131,14 +131,14 @@ public class ProdutoDAO implements IProdutoDAO {
 	private String getSqlInsert() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("insert into tb_produto (id, codigo, nome, preco) ");
-		sb.append("values (nextval('sq_produto'),?,?,?");
+		sb.append("values (nextval('sq_produto'),?,?,?)");
 		return sb.toString();
 	}
 
 	private void adicionarParametrosInsert(PreparedStatement stm, Produto produto) throws SQLException {
 		stm.setString(1, produto.getCodigo());
 		stm.setString(2, produto.getNome());
-		stm.setDouble(2, produto.getPreco());
+		stm.setDouble(3, produto.getPreco());
 	}
 	
 	private void closeConnection(Connection connection, PreparedStatement stm, ResultSet rs) {
@@ -160,9 +160,9 @@ public class ProdutoDAO implements IProdutoDAO {
 	
 	private String getSqlUpdate() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("update tb_produto");
-		sb.append("set nome = ?, set codigo = ?, set preco = ?");
-		sb.append("where id = ?");
+		sb.append("update tb_produto ");
+		sb.append("set nome = ?, codigo = ?, preco = ? ");
+		sb.append("where id = ? ");
 		return sb.toString();
 	}
 
@@ -175,8 +175,8 @@ public class ProdutoDAO implements IProdutoDAO {
 	
 	private String getSqlSelect() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("select * from tb_produto");
-		sb.append("where codigo = ?");
+		sb.append("select * from tb_produto ");
+		sb.append("where codigo = ? ");
 		return sb.toString();
 	}
 
@@ -186,14 +186,14 @@ public class ProdutoDAO implements IProdutoDAO {
 
 	private String getSqlSelectAll() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("select * from tb_produto");
+		sb.append("select * from tb_produto ");
 		return sb.toString();
 	}
 	
 	private String getSqlDelete() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("delete from tb_produto");
-		sb.append("where codigo = ?");
+		sb.append("delete from tb_produto ");
+		sb.append("where codigo = ? ");
 		return sb.toString();
 	}
 	

@@ -104,12 +104,14 @@ public class ProdutoTest {
 		Produto produto = new Produto();
 		produto.setCodigo("10");
 		produto.setNome("Caio Cesar");
+		produto.setPreco(100000.00);
 		Integer countCad = produtoDAO.cadastrar(produto);
 		assertTrue(countCad == 1);
 		
 		Produto produto2 = new Produto();
-		produto.setCodigo("30");
-		produto.setNome("Rodrigo Pires");
+		produto2.setCodigo("30");
+		produto2.setNome("Rodrigo Pires");
+		produto2.setPreco(40000.00);
 		Integer countCad2 = produtoDAO.cadastrar(produto2);
 		assertTrue(countCad2 == 1);
 		
