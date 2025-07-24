@@ -5,8 +5,8 @@
  * 
  */
 module ExercicioModulo29 {
-	requires junit;
-	requires java.sql;
+	requires transitive junit;
+	requires transitive java.sql;
 	
 	exports exercicio.domain to junit;
 	exports exercicio.dao.generic.jdbc to junit;
