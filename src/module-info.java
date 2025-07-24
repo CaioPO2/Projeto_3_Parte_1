@@ -1,0 +1,15 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module ExercicioModulo29 {
+	requires junit;
+	requires java.sql;
+	
+	exports exercicio.domain to junit;
+	exports exercicio.dao.generic.jdbc to junit;
+	exports exercicio.dao.generic.jdbc.dao to junit;
+	exports exercicio.test to junit;
+}
